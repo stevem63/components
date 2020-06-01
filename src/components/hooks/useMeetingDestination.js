@@ -18,6 +18,8 @@ export default function useMeetingDestination(meetingDestination) {
     localVideo: null,
     remoteAudio: null,
     remoteVideo: null,
+    participants: null,
+    participantList: null,
   };
 
   const [meeting, setMeeting] = useState(emptyMeeting);

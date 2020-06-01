@@ -5,7 +5,6 @@ import {Spinner} from '@momentum-ui/react';
 
 import {WEBEX_COMPONENTS_CLASS_PREFIX} from '../../constants';
 import {useMeetingDestination} from '../hooks';
-
 import {WebexInMeeting, WebexInterstitialMeeting, WebexMeetingControl, WebexMeetingControls} from '..';
 
 import './WebexMeeting.scss';
@@ -18,8 +17,9 @@ import './WebexMeeting.scss';
  * @returns {Object} JSX of the component
  */
 export default function WebexMeeting({meetingDestination, controls}) {
-  const {ID, remoteVideo} = useMeetingDestination(meetingDestination);
+  const {ID, remoteVideo, participantList, participants} = useMeetingDestination(meetingDestination);
   const isActive = remoteVideo !== null;
+  const showParticipantList = participantList === 'active';
 
   const classBaseName = `${WEBEX_COMPONENTS_CLASS_PREFIX}-meeting`;
   const mainClasses = {
@@ -37,6 +37,7 @@ export default function WebexMeeting({meetingDestination, controls}) {
           <WebexMeetingControls className="meeting-controls-container" meetingID={ID}>
             {meetingControls}
           </WebexMeetingControls>
+          {showParticipantList && <div>{JSON.stringify(participants)} </div>}
         </Fragment>
       ) : (
         <Spinner />
@@ -59,5 +60,7 @@ WebexMeeting.defaultProps = {
    */
   // eslint-disable-next-line no-confusing-arrow
   controls: (isActive) =>
-    isActive ? ['mute-audio', 'mute-video', 'leave-meeting'] : ['mute-audio', 'mute-video', 'join-meeting'],
+    isActive
+      ? ['mute-audio', 'mute-video', 'participant-list', 'leave-meeting']
+      : ['mute-audio', 'mute-video', 'join-meeting'],
 };

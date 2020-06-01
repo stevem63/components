@@ -17,6 +17,7 @@ export default function useMeeting(meetingID) {
     remoteAudio: null,
     remoteVideo: null,
     error: null,
+    meetingInfo: null,
   };
 
   const [meeting, setMeeting] = useState(emptyMeeting);

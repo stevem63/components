@@ -9,6 +9,7 @@ export const JOIN_CONTROL = 'join-meeting';
 export const LEAVE_CONTROL = 'leave-meeting';
 export const DISABLED_MUTE_AUDIO_CONTROL = 'disabled-mute-audio';
 export const DISABLED_JOIN_CONTROL = 'disabled-join-meeting';
+export const PARTICIPANT_LIST = 'participant-list';
 
 /**
  * @typedef MeetingsJSON
@@ -26,6 +27,7 @@ export const DISABLED_JOIN_CONTROL = 'disabled-join-meeting';
  *     "remoteAudio": {},
  *     "localShare": {},
  *     "remoteShare": {}
+ * TODO: add participantList
  *  }
  * }
  */
@@ -83,6 +85,12 @@ export default class MeetingsJSONAdapter extends MeetingsAdapter {
       ID: DISABLED_JOIN_CONTROL,
       action: () => {},
       display: this.disabledJoinControl.bind(this),
+    };
+
+    this.meetingControls[PARTICIPANT_LIST] = {
+      ID: PARTICIPANT_LIST,
+      action: this.toggleParticipantList.bind(this),
+      display: this.participantListControl.bind(this),
     };
   }
 
@@ -153,6 +161,9 @@ export default class MeetingsJSONAdapter extends MeetingsAdapter {
         meeting.remoteAudio
           ? from(this.getStream({video: false, audio: true})).pipe(map((remoteAudio) => ({...meeting, remoteAudio})))
           : of(meeting)
+      ),
+      flatMap((meeting) =>
+        meeting.participantList === 'active' ? {...meeting, participantList: 'inactive'} : of(meeting)
       )
       /* eslint-enable no-confusing-arrow */
     );
@@ -164,8 +175,9 @@ export default class MeetingsJSONAdapter extends MeetingsAdapter {
     const leaveEvents$ = fromEvent(document, LEAVE_CONTROL).pipe(
       tap(() => end$.next(`Meeting "${ID}" has completed.`))
     );
+    const participantListEvents$ = fromEvent(document, PARTICIPANT_LIST);
 
-    const events$ = merge(audioEvents$, videoEvents$, joinEvents$, leaveEvents$).pipe(
+    const events$ = merge(audioEvents$, videoEvents$, joinEvents$, leaveEvents$, participantListEvents$).pipe(
       filter((event) => event.detail.ID === ID),
       // Make a copy of the meeting to treat it as if were immutable
       map((event) => ({...event.detail}))
@@ -271,7 +283,7 @@ export default class MeetingsJSONAdapter extends MeetingsAdapter {
   }
 
   /**
-   * Join the meeting by removing the remote media
+   * Leave the meeting by removing the remote media
    * Used by "leave-meeting" meeting control.
    *
    * @param {string} ID  ID of the meeting for which to mute local audio.
@@ -287,6 +299,66 @@ export default class MeetingsJSONAdapter extends MeetingsAdapter {
 
       document.dispatchEvent(new CustomEvent(LEAVE_CONTROL, {detail: meeting}));
     }
+  }
+
+  /**
+   * Toggle the visibility of the participant list.
+   * Used by "participant-list" meeting control.
+   *
+   * @param {string} ID  ID of the meeting for which to show/hide the participant list.
+   * @memberof MeetingsJSONAdapter
+   * @private
+   */
+  toggleParticipantList(ID) {
+    if (this.datasource[ID]) {
+      const meeting = this.datasource[ID];
+
+      meeting.participantList = meeting.participantList === 'active' ? 'inactive' : 'active';
+
+      document.dispatchEvent(new CustomEvent(PARTICIPANT_LIST, {detail: meeting}));
+    }
+  }
+
+  /**
+   * Returns an observable that emits the display data of a meeting control.
+   *
+   * @param {string} ID ID of the meeting for which to update display
+   * @returns {Observable.<MeetingControlDisplay>}
+   * @memberof MeetingJSONAdapter
+   * @private
+   */
+  participantListControl(ID) {
+    const participantListInactive = {
+      ID: PARTICIPANT_LIST,
+      icon: 'participant-list',
+      tooltip: 'Show Participant List',
+      state: MeetingControlState.INACTIVE,
+    };
+    const participantListActive = {
+      ID: PARTICIPANT_LIST,
+      icon: 'participant-list',
+      tooltip: 'Hide Participant List',
+      state: MeetingControlState.ACTIVE,
+    };
+
+    const default$ = Observable.create((observer) => {
+      const meeting = this.datasource[ID];
+
+      if (meeting) {
+        observer.next(meeting.participantList === 'active' ? participantListActive : participantListInactive);
+      } else {
+        observer.error(new Error(`Could not find meeting with ID "${ID}"`));
+      }
+
+      observer.complete();
+    });
+
+    const participantListEvent$ = fromEvent(document, PARTICIPANT_LIST).pipe(
+      filter((event) => event.detail.ID === ID),
+      map((event) => (event.detail.participantList === 'active' ? participantListActive : participantListInactive))
+    );
+
+    return concat(default$, participantListEvent$);
   }
 
   /**

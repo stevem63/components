@@ -14,7 +14,13 @@
     "localAudio": null,
     "remoteAudio": null,
     "localShare": null,
-    "remoteShare": null
+    "remoteShare": null,
+    "participants": {
+      "test_id": {
+        "name": "test user"
+      }
+    },
+    "participantList": "inactive"
   },
   "scheduledMeeting": {
     "ID": "scheduledMeeting",
@@ -24,7 +30,13 @@
     "localAudio": null,
     "remoteAudio": null,
     "localShare": null,
-    "remoteShare": null
+    "remoteShare": null,
+    "participants": {
+      "test_id": {
+        "name": "test user"
+      }
+    },
+    "participantList": "inactive"
   },
   "oneOnOneMeeting": {
     "ID": "oneOnOneMeeting",
@@ -34,7 +46,13 @@
     "localAudio": null,
     "remoteAudio": null,
     "localShare": null,
-    "remoteShare": null
+    "remoteShare": null,
+    "participants": {
+      "test_id": {
+        "name": "test user"
+      }
+    },
+    "participantList": "inactive"
   },
   "spaceMeeting": {
     "ID": "spaceMeeting",
@@ -44,7 +62,13 @@
     "localAudio": null,
     "remoteAudio": null,
     "localShare": null,
-    "remoteShare": null
+    "remoteShare": null,
+    "participants": {
+      "test_id": {
+        "name": "test user"
+      }
+    },
+    "participantList": "inactive"
   },
   "noMeetingTitle": {
     "ID": "noMeetingTitle",
@@ -54,7 +78,13 @@
     "localAudio": null,
     "remoteAudio": null,
     "localShare": null,
-    "remoteShare": null
+    "remoteShare": null,
+    "participants": {
+      "test_id": {
+        "name": "test user"
+      }
+    },
+    "participantList": "inactive"
   },
   "localVideo": {
     "ID": "localVideo",
@@ -64,7 +94,13 @@
     "localAudio": null,
     "remoteAudio": null,
     "localShare": null,
-    "remoteShare": null
+    "remoteShare": null,
+    "participants": {
+      "test_id": {
+        "name": "test user"
+      }
+    },
+    "participantList": "inactive"
   },
   "localAudio": {
     "ID": "localAudio",
@@ -74,7 +110,13 @@
     "localAudio": {},
     "remoteAudio": null,
     "localShare": null,
-    "remoteShare": null
+    "remoteShare": null,
+    "participants": {
+      "test_id": {
+        "name": "test user"
+      }
+    },
+    "participantList": "inactive"
   },
   "mutedLocalAudio": {
     "ID": "mutedLocalAudio",
@@ -86,7 +128,13 @@
     },
     "remoteAudio": null,
     "localShare": null,
-    "remoteShare": null
+    "remoteShare": null,
+    "participants": {
+      "test_id": {
+        "name": "test user"
+      }
+    },
+    "participantList": "inactive"
   },
   "remoteVideo": {
     "ID": "remoteVideo",
@@ -96,7 +144,13 @@
     "localAudio": null,
     "remoteAudio": null,
     "localShare": null,
-    "remoteShare": null
+    "remoteShare": null,
+    "participants": {
+      "test_id": {
+        "name": "test user"
+      }
+    },
+    "participantList": "inactive"
   },
   "remoteAudio": {
     "ID": "remoteAudio",
@@ -106,7 +160,13 @@
     "localAudio": null,
     "remoteAudio": {},
     "localShare": null,
-    "remoteShare": null
+    "remoteShare": null,
+    "participants": {
+      "test_id": {
+        "name": "test user"
+      }
+    },
+    "participantList": "inactive"
   },
   "remoteAudio&Video": {
     "ID": "remoteAudio&Video",
@@ -115,7 +175,13 @@
     "remoteVideo": {},
     "localAudio": null,
     "remoteAudio": {},
-    "localShare": null
+    "localShare": null,
+    "participants": {
+      "test_id": {
+        "name": "test user"
+      }
+    },
+    "participantList": "inactive"
   },
   "localMedia": {
     "ID": "localMedia",
@@ -125,7 +191,13 @@
     "localAudio": {},
     "remoteAudio": null,
     "localShare": null,
-    "remoteShare": null
+    "remoteShare": null,
+    "participants": {
+      "test_id": {
+        "name": "test user"
+      }
+    },
+    "participantList": "inactive"
   },
   "remoteMedia": {
     "ID": "remoteMedia",
@@ -135,7 +207,13 @@
     "localAudio": null,
     "remoteAudio": {},
     "localShare": null,
-    "remoteShare": null
+    "remoteShare": null,
+    "participants": {
+      "test_id": {
+        "name": "test user"
+      }
+    },
+    "participantList": "inactive"
   },
   "remote&localMedia": {
     "ID": "remote&localMedia",
@@ -145,6 +223,12 @@
     "localAudio": {},
     "remoteAudio": {},
     "localShare": null,
-    "remoteShare": null
+    "remoteShare": null,
+    "participants": {
+      "test_id": {
+        "name": "test user"
+      }
+    },
+    "participantList": "inactive"
   }
 }
